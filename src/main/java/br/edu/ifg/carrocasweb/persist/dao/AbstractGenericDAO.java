@@ -1,4 +1,4 @@
-package br.edu.ifg.persist.dao;
+package br.edu.ifg.carrocasweb.persist.dao;
 
 import java.util.List;
 
@@ -7,8 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public abstract class AbstractGenericDAO<T>{
 
 	protected static EntityManager entityManager;

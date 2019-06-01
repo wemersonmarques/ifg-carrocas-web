@@ -1,13 +1,15 @@
-package br.edu.ifg.persist.dao;
+package br.edu.ifg.carrocasweb.persist.dao;
 
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.edu.ifg.model.usuario.Usuario;
+import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 
 @Repository
-public class UsuarioDAO extends AbstractGenericDAO{
+@Transactional
+public class UsuarioDAO extends AbstractGenericDAO<Usuario>{
 
 	
 	public UsuarioDAO() {
@@ -16,7 +18,7 @@ public class UsuarioDAO extends AbstractGenericDAO{
 	
 	@Override
 	public boolean existe(String login) {		
-		return consultarPorLogin(login) != null;
+		return consultarPorLogin(login) != null ? true : false;
 	}
 	
 	public Usuario consultarPorLogin(String login) {

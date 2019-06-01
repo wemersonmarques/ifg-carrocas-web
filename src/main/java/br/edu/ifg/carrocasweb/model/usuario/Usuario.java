@@ -1,4 +1,4 @@
-package br.edu.ifg.model.usuario;
+package br.edu.ifg.carrocasweb.model.usuario;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.edu.ifg.model.anuncio.Anuncio;
+import br.edu.ifg.carrocasweb.model.anuncio.Anuncio;
 
 @Entity
 @Table(name = "usuarios")

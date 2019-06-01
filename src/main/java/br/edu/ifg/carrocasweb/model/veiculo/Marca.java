@@ -1,4 +1,4 @@
-package br.edu.ifg.model.veiculo;
+package br.edu.ifg.carrocasweb.model.veiculo;
 
 import java.util.List;
 

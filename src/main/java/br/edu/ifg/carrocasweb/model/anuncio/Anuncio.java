@@ -1,4 +1,4 @@
-package br.edu.ifg.model.anuncio;
+package br.edu.ifg.carrocasweb.model.anuncio;
 
 import java.util.Date;
 
@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.edu.ifg.model.usuario.Usuario;
-import br.edu.ifg.model.veiculo.Veiculo;
+import br.edu.ifg.carrocasweb.model.usuario.Usuario;
+import br.edu.ifg.carrocasweb.model.veiculo.Veiculo;
 
 @Entity
 @Table(name = "anuncios")

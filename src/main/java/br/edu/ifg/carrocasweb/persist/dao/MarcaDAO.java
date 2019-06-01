@@ -1,5 +1,10 @@
-package br.edu.ifg.persist.dao;
+package br.edu.ifg.carrocasweb.persist.dao;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+@Transactional
 public class MarcaDAO extends AbstractGenericDAO{
 
 	@Override
