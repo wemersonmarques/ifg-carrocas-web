@@ -11,3 +11,4 @@ Tecnologias utilizadas:
 - SpringBoot
 - Hibernate
 - Thymeleaf
+- Materialize CSS
