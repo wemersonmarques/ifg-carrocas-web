@@ -18,8 +18,8 @@ import br.edu.ifg.carrocasweb.model.anuncio.Anuncio;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+	private Long id;
+
 	@Column(nullable = false)
 	private String login;
 	
@@ -116,6 +116,13 @@ public class Usuario {
 	
 	public void setAnuncios(List<Anuncio> anuncios) {
 		this.anuncios = anuncios;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }
