@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+<meta charset="UTF-8">
+<title>Cadastro Usuario</title>
+</head>
+<body>
+	<form action="salvarveiculo" method="post">
+		<label>Modelo</label>
+		<input name="modelo">
+		<label>Quilometragem</label>
+		<input name="quilometragem">
+		<label>Motorizacao</label>
+		<input name="motorizacao"> 
+		<input type="submit" value="Salvar" class="waves-effect waves-light btn">
+	</form>
+
+	<br />
+	<br />
+
+	<a href="/listarveiculos">Listar veículos</a>
+	<table>
+		<tr th:each="veiculo  : ${veiculos}">
+			<td th:text="${veiculo.modelo}"></td>
+			<td th:text="${veiculo.quilometragem}"></td>
+			<td th:text="${veiculo.motorizacao}"></td>
+		</tr>
+
+	</table>
+	
+	<br />
+	<br />
+	
+	<form action="pesquisarveiculo" method="post">
+		<label>Pesquisa por título</label>
+		<input name="nomepesquisa">
+		<input type="submit" class="waves-effect waves-light btn">
+	</form>
+	<table>
+		<tr th:each="veiculo  : ${veiculostitulo}">
+			<td th:text="${veiculo.modelo}"></td>
+			<td th:text="${veiculo.quilometragem}"></td>
+			<td th:text="${veiculo.motorizacao}"></td>
+		</tr>
+	
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+</html>

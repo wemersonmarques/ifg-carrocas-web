@@ -21,6 +21,9 @@ public class Anuncio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(nullable = false, length = 255)
+	private String titulo;
+	
 	@Column(nullable = false)
 	private Date dataCadastro;
 	

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,7 @@ import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 @Repository
 @Transactional
 public class UsuarioDAO extends AbstractGenericDAO<Usuario>{
-
+	
 	public UsuarioDAO() {
 		
 	}
