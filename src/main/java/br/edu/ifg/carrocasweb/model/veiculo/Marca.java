@@ -18,7 +18,7 @@ public class Marca {
 	private long id;
 	
 	@Column(nullable = false)
-	private String nomeMarca;
+	private String nome;
 	
 	@OneToMany(mappedBy = "marca")
 	private List<Veiculo> veiculos;
@@ -31,12 +31,12 @@ public class Marca {
 		this.id = id;
 	}
 
-	public String getNomeMarca() {
-		return nomeMarca;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeMarca(String nomeMarca) {
-		this.nomeMarca = nomeMarca;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public List<Veiculo> getVeiculos() {

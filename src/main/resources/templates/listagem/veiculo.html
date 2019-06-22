@@ -1,0 +1,9 @@
+<a href="/listarveiculos">Listar veículos</a>
+<table>
+	<tr th:each="veiculo  : ${veiculos}">
+		<td th:text="${veiculo.modelo}"></td>
+		<td th:text="${veiculo.quilometragem}"></td>
+		<td th:text="${veiculo.motorizacao}"></td>
+		<td th:text="${veiculo.marca.nome}"></td>
+	</tr>
+</table>

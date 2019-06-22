@@ -1,43 +1,70 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
+	<script>
+function includeHTML() {
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script>
 <head>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
 <meta charset="UTF-8">
 <title>Cadastro Usuario</title>
 </head>
 <body>
-	<form action="salvarveiculo" method="post">
+	<form action="salvarveiculo" method="post" th:object="${veiculo}">
+		<label>Marca</label>
+		<select th:field="*{marcaIddd}"class="form-control" multiple>
+  			<option th:each="marca : ${marcas}"                                        
+      			th:value="${marca.id}"
+      			th:text="${marca.nome}">
+  			</option>
+		</select>
 		<label>Modelo</label>
-		<input name="modelo">
+		<input name="modelo"> 
 		<label>Quilometragem</label>
-		<input name="quilometragem">
-		<label>Motorizacao</label>
+		<input name="quilometragem"> 
+		<label>Motorizacao</label> 
 		<input name="motorizacao"> 
 		<input type="submit" value="Salvar" class="waves-effect waves-light btn">
 	</form>
 
 	<br />
 	<br />
-
-	<a href="/listarveiculos">Listar veículos</a>
-	<table>
-		<tr th:each="veiculo  : ${veiculos}">
-			<td th:text="${veiculo.modelo}"></td>
-			<td th:text="${veiculo.quilometragem}"></td>
-			<td th:text="${veiculo.motorizacao}"></td>
-		</tr>
-
-	</table>
-	
+	<div w3-include-html="../listagem/veiculo.html"></div> 
 	<br />
 	<br />
-	
+
 	<form action="pesquisarveiculo" method="post">
-		<label>Pesquisa por título</label>
-		<input name="nomepesquisa">
+		<label>Pesquisa por título</label> <input name="nomepesquisa">
 		<input type="submit" class="waves-effect waves-light btn">
 	</form>
 	<table>
@@ -46,7 +73,11 @@
 			<td th:text="${veiculo.quilometragem}"></td>
 			<td th:text="${veiculo.motorizacao}"></td>
 		</tr>
-	
-	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
+
+<script>
+includeHTML();
+</script>
 </html>

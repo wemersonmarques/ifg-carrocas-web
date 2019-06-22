@@ -33,7 +33,7 @@ public class AnuncioController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/listaranuncios")
-	public ModelAndView usuarios() {
+	public ModelAndView anuncios() {
 		ModelAndView mav = new ModelAndView("cadastro/cadastroanuncio");
 		Iterable<Anuncio> anuncios = anuncioDao.consultarTodos(Anuncio.class);
 		mav.addObject("anuncios", anuncios);

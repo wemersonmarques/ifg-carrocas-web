@@ -1,5 +1,6 @@
 package br.edu.ifg.carrocasweb.model.veiculo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "veiculos")
@@ -15,7 +17,7 @@ public class Veiculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	private Marca marca;
 	
 	@Column(nullable = false)
@@ -26,6 +28,9 @@ public class Veiculo {
 	
 	@Column
 	private String motorizacao;
+	
+	@Transient
+	private String marcaIddd;
 	
 	public Marca getMarca() {
 		return marca;
@@ -56,6 +61,14 @@ public class Veiculo {
 	
 	public void setMotorizacao(String motorizacao) {
 		this.motorizacao = motorizacao;
+	}
+	
+	public String getMarcaIddd() {
+		return this.marcaIddd;
+	}
+	
+	public void setMarcaIddd(String marcaId) {
+		this.marcaIddd = marcaId;
 	}
 	
 }

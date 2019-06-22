@@ -14,10 +14,6 @@ import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 @Transactional
 public class UsuarioDAO extends AbstractGenericDAO<Usuario>{
 	
-	public UsuarioDAO() {
-		
-	}
-	
 	@Override
 	public boolean existe(String login) {		
 		return consultarPorLogin(login) != null ? true : false;
