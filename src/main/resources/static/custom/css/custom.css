@@ -1,0 +1,62 @@
+header {
+	height:60px;
+	background-color: #019a8b;
+}
+
+#logo {
+	margin-top: 10px;
+	padding-left: 50px;
+	color: #FFF;
+}
+
+#redirecionamentoCadastros a {
+	float: right;
+	padding: 0px 15px 0px 15px;
+	margin-top: 20px;
+	color: #FFF;
+}
+
+#redirecionamentoCadastros {
+	float: right;
+}
+
+#anunciosHome td {
+	display: table-header-group;	
+} 
+
+#anunciosHome {
+	float:right;
+}
+
+.tituloAnuncio {
+	font-size:25px;
+}
+
+.fotoVeiculo img {
+	width: 285px;
+	height: 185px;
+}
+
+#anuncios {
+	margin: auto;
+	padding-top: 50px;
+}
+.fotoVeiculo {
+	display: table-cell!important;
+}
+
+.btn {
+	float: right;
+}
+
+footer {
+	bottom: 0;
+	text-align: center;
+	height: 40px;
+	background-color: #019a8b;
+	color: #fff;
+}
+
+#pesquisarPorMarca {
+	clear: both;
+}

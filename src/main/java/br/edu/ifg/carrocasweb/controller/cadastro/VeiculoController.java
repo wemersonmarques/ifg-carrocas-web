@@ -16,7 +16,7 @@ import br.edu.ifg.carrocasweb.persist.dao.MarcaDAO;
 import br.edu.ifg.carrocasweb.persist.dao.VeiculoDAO;
 
 @Controller
-public class VeiculoController {
+public class VeiculoController extends Thread{
 	
 	@Autowired
 	private VeiculoDAO veiculoDao;

@@ -1,45 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-	<script>
-function includeHTML() {
-  var z, i, elmnt, file, xhttp;
-  /*loop through a collection of all HTML elements:*/
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    /*search for elements with a certain atrribute:*/
-    file = elmnt.getAttribute("w3-include-html");
-    if (file) {
-      /*make an HTTP request using the attribute value as the file name:*/
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          /*remove the attribute, and call this function once more:*/
-          elmnt.removeAttribute("w3-include-html");
-          includeHTML();
-        }
-      }      
-      xhttp.open("GET", file, true);
-      xhttp.send();
-      /*exit the function:*/
-      return;
-    }
-  }
-};
-</script>
 <head>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+<link type="text/css" rel="stylesheet" href="custom/css/custom.css"/>
 <meta charset="UTF-8">
 <title>Cadastro Usuario</title>
 </head>
 <body>
+<header>
+		<div class="row">
+			<h3 id="logo" class="col-md-4">Carroças Web</h3>
+			<div id="redirecionamentoCadastros" class="col-md-8">
+				<a href="/cadastrousuario">Cadastro Usuario</a>
+				<a href="/cadastroveiculo">Cadastro Veículo</a>
+				<a href="/cadastromarca">Cadastro Marca</a>
+				<a href="/cadastroanuncio">Cadastro Anúncio</a>
+				<a href="/">Home</a>
+			</div>
+		</div>
+	</header>
+	<div class="container">
 	<form action="salvarveiculo" method="post" th:object="${veiculo}">
 		<label>Marca</label>
 		<select th:field="*{marcaIddd}"class="form-control" multiple>
@@ -58,8 +43,7 @@ function includeHTML() {
 	</form>
 
 	<br />
-	<br />
-	<div w3-include-html="../listagem/veiculo.html"></div> 
+	<br /> 
 	<br />
 	<br />
 
@@ -73,11 +57,8 @@ function includeHTML() {
 			<td th:text="${veiculo.quilometragem}"></td>
 			<td th:text="${veiculo.motorizacao}"></td>
 		</tr>
-
+	</table>
+	</div>
 		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
-
-<script>
-includeHTML();
-</script>
 </html>

@@ -4,23 +4,62 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!--Import materialize.css-->
 <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+<link type="text/css" rel="stylesheet" href="custom/css/custom.css"/>
 <meta charset="UTF-8">
 <title>Carrocas Web - IFG</title>
 </head>
 <body>
 	<header>
-		<a href="/cadastrousuario">Cadastro Usuario</a>
-		<a href="/cadastroveiculo">Cadastro Veículo</a>
-		<a href="/cadastromarca">Cadastro Marca</a>
-		<a href="/cadastroanuncio">Cadastro Anúncio</a>
+		<div class="row">
+			<h3 id="logo" class="col-md-4">Carroças Web</h3>
+			<div id="redirecionamentoCadastros" class="col-md-8">
+				<a href="/cadastrousuario">Cadastro Usuario</a>
+				<a href="/cadastroveiculo">Cadastro Veículo</a>
+				<a href="/cadastromarca">Cadastro Marca</a>
+				<a href="/cadastroanuncio">Cadastro Anúncio</a>
+				<a href="/">Home</a>
+			</div>
+		</div>
 	</header>
 	<main>
-		<section id="filtros">
-		</section>
-		<section id="carros">
-		</section>
+		<div class="container">
+			<div id="anuncios" class="row">
+				<div id="filtroAnuncio" class="col-md-3">
+					<form action="pesquisarPorTitulo" method="post" id="pesquisarPorTitulo"> 
+						<input name="nomepesquisa" placeholder="Busca por palavra-chave">
+						<input type="submit" class="waves-effect waves-light btn">
+					</form>	
+					<form action="pesquisarPorMarca" id="pesquisarPorMarca">
+						<label>Pesquisar por marca</label>
+						<select name="idMarcaVeiculo" class="form-control" multiple required size="3">
+  							<option th:each="marca : ${marcas}"                                        
+      						th:value="${marca.id}"
+      						th:text="${marca.nome}">
+  							</option>
+  							<input type="submit" class="waves-effect waves-light btn">
+						</select>
+					</form>
+				</div>
+				<div id="anunciosHome" class="col-md-6">
+				<table>
+						<tr th:each="anuncio  : ${anuncios}">
+							<td class="fotoVeiculo"><img th:src="@{'/uploads/' + ${anuncio.id} + '/foto.jpg'}"/></td>
+							<td th:utext="${anuncio.titulo}" class="tituloAnuncio"></td>
+							<td th:utext="'<b>Marca:</b> ' + ${anuncio.veiculo.marca.nome}" class="marcaVeiculoAnuncio"></td>
+							<td th:utext="'<b>Modelo:</b> ' + ${anuncio.veiculo.modelo}" class="modeloVeiculoAnuncio"></td>
+							<td th:utext="'<b>Motorização:</b> ' + ${anuncio.veiculo.motorizacao}" class="motorizacaoVeiculoAnuncio"></td>
+							<td th:utext="'<b>KM:</b> ' + ${anuncio.veiculo.quilometragem}" class="kmVeiculoAnuncio"></td>
+							<td th:utext="'<b>Telefone:</b> ' + ${anuncio.telefone}" class="telefoneAnuncio"></td>
+							<td th:utext="'<b>Data:</b> ' + ${anuncio.dataCadastro}" class="dataAnuncio"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<footer class="col-md-12">
+			<p>Trabalho desenvolvido para disciplina Programação Orientada a Objetos II - Prof. Otávio Calaça Xavier</p>
+		</footer>
 	</main>
-	
-	<footer></footer>
 </body>
 </html>

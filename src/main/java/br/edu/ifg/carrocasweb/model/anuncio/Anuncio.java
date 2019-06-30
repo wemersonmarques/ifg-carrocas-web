@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 import br.edu.ifg.carrocasweb.model.veiculo.Veiculo;
@@ -24,7 +27,7 @@ public class Anuncio {
 	@Column(nullable = false, length = 255)
 	private String titulo;
 	
-	@Column(nullable = false)
+	@CreationTimestamp
 	private Date dataCadastro;
 	
 	@Column
@@ -37,8 +40,24 @@ public class Anuncio {
 	private Veiculo veiculo;
 	
 	@Column(nullable = false)
-	private boolean ativo;
+	private boolean ativo = true;
+	
+	@Column
+	private String telefone;
 
+	@Transient
+	private long idMarcaVeiculo;
+	
+	@Transient
+	private String modeloVeiculo;
+	
+	@Transient
+	private String motorizacaoVeiculo;
+	
+	@Transient
+	private long quilometragemVeiculo;  
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -74,6 +93,42 @@ public class Anuncio {
 	}
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	public long getIdMarcaVeiculo() {
+		return idMarcaVeiculo;
+	}
+	public void setIdMarcaVeiculo(long idMarcaVeiculo) {
+		this.idMarcaVeiculo = idMarcaVeiculo;
+	}
+	public String getModeloVeiculo() {
+		return modeloVeiculo;
+	}
+	public void setModeloVeiculo(String modeloVeiculo) {
+		this.modeloVeiculo = modeloVeiculo;
+	}
+	public String getMotorizacaoVeiculo() {
+		return motorizacaoVeiculo;
+	}
+	public void setMotorizacaoVeiculo(String motorizacaoVeiculo) {
+		this.motorizacaoVeiculo = motorizacaoVeiculo;
+	}
+	public long getQuilometragemVeiculo() {
+		return quilometragemVeiculo;
+	}
+	public void setQuilometragemVeiculo(long quilometragemVeiculo) {
+		this.quilometragemVeiculo = quilometragemVeiculo;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 	
 }

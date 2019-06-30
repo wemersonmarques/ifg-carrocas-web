@@ -1,11 +1,13 @@
 package br.edu.ifg.carrocasweb;
 
+import java.io.File;
+
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+
+import br.edu.ifg.carrocasweb.functionality.FileWritter;
 
 @SpringBootApplication
 @EntityScan(basePackages="br.edu.ifg.carrocasweb.model")
@@ -13,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class CarrocaswebApplication {
 
 	public static void main(String[] args) {
+		new File(FileWritter.uploadDirectory).mkdir();
 		SpringApplication.run(CarrocaswebApplication.class, args);
 	}
 

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ifg.carrocasweb.model.anuncio.Anuncio;
+import br.edu.ifg.carrocasweb.model.veiculo.Marca;
+import br.edu.ifg.carrocasweb.model.veiculo.Veiculo;
 
 @Repository
 @Transactional
@@ -23,10 +25,22 @@ public class AnuncioDAO extends AbstractGenericDAO {
 		List<Anuncio> anuncios;
 		
 		try {
-			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a WHERE lower(a.nome) LIKE lower(:nome)").setParameter("titulo", "%" + titulo + "%").getResultList();
+			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a WHERE lower(a.titulo) LIKE lower(:titulo)").setParameter("titulo", "%" + titulo + "%").getResultList();
 		} catch (NoResultException e) {
 			anuncios = null;
 		}
+		return anuncios;
+	}
+	
+	public List<Anuncio> consultarPorMarca(long idMarca) {
+		List<Anuncio> anuncios;
+		
+		try {
+			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a INNER JOIN Veiculo v ON a.veiculo = v INNER JOIN Marca m ON v.marca = m WHERE m.id = :id").setParameter("id", idMarca).getResultList();
+		} catch (NoResultException e) {
+			anuncios = null;
+		}
+		
 		return anuncios;
 	}
 

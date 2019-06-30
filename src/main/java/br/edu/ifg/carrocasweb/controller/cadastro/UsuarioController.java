@@ -14,7 +14,7 @@ import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 import br.edu.ifg.carrocasweb.persist.dao.UsuarioDAO;
 
 @Controller
-public class UsuarioController {
+public class UsuarioController extends Thread {
 	
 	@Autowired
 	private UsuarioDAO usuarioDao;

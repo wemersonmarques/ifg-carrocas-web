@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.edu.ifg.carrocasweb.model.veiculo.Marca;
 import br.edu.ifg.carrocasweb.model.veiculo.Veiculo;
 
 @Repository
@@ -29,5 +30,9 @@ public class VeiculoDAO extends AbstractGenericDAO {
 		}
 		return veiculos;
 	}
-
+	
+	public List<Veiculo> consultarPorMarca(long idMarca) {
+		List<Veiculo> veiculos = entityManager.createQuery("FROM Veiculo p, Marca m WHERE m.id = :id").setParameter("id", idMarca).getResultList();
+		return veiculos;
+	}
 }

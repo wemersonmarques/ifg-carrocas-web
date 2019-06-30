@@ -70,5 +70,14 @@ public class Veiculo {
 	public void setMarcaIddd(String marcaId) {
 		this.marcaIddd = marcaId;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	
 }
