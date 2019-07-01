@@ -7,11 +7,13 @@
 				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Sair</a>
 			<a href="/logon"
 				th:if="${#session?.getAttribute('usuarioAutenticado') == null}">Logar</a>
+			<a href="/editarusuario"
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Meu perfil</a>
 			<a href="/cadastromarca"
-				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro
-				Marca</a> <a href="/cadastroanuncio"
-				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro
-				Anúncio</a> <a href="/">Home</a>
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro marca</a>
+			<a href="/cadastroanuncio"
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro anúncio</a> 
+			<a href="/">Home</a>
 		</div>
 	</div>
 </header>

@@ -2,8 +2,11 @@ package br.edu.ifg.carrocasweb.controller.cadastro;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,12 +15,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 import br.edu.ifg.carrocasweb.persist.dao.UsuarioDAO;
+import br.edu.ifg.carrocasweb.service.LoginService;
 
 @Controller
 public class UsuarioController extends Thread {
 
 	@Autowired
 	private UsuarioDAO usuarioDao;
+
+	@Autowired
+	private HttpSession sessao;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastrousuario")
 	public String inicio() {
@@ -26,11 +33,16 @@ public class UsuarioController extends Thread {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
 	public String salvar(Usuario usuario) {
-		if (!usuarioDao.existe(usuario.getLogin())) {
-			usuarioDao.salvar(usuario);
-			return "cadastro/cadastrousuario";
+		if (LoginService.isAutenticado(sessao)) {
+			if (!usuarioDao.existe(usuario.getLogin())) {
+				usuarioDao.salvar(usuario);
+				return "cadastro/cadastrousuario";
+			} else {
+				usuarioDao.atualizar(usuario);
+			}
+			return "redirect:";
 		}
-		return "redirect:cadastrousuario";
+		return "redirect:";
 
 	}
 
@@ -50,6 +62,22 @@ public class UsuarioController extends Thread {
 		mav.addObject("usuariosnome", listaUsuarios);
 		mav.addObject("usuarioo", new Usuario());
 		return mav;
+	}
+
+	@GetMapping("/editarusuario")
+	public ModelAndView editarUsuario() {
+		String login = (String) sessao.getAttribute("usuarioAutenticado");
+		Usuario usuario = usuarioDao.consultarPorLogin(login);
+
+		if (LoginService.isAutenticado(sessao)) {
+			ModelAndView mav = new ModelAndView("edicao/edicaousuario");
+
+			mav.addObject("usuario", usuario);
+
+			return mav;
+		} else {
+			return new ModelAndView("redirect:logon");
+		}
 	}
 
 }

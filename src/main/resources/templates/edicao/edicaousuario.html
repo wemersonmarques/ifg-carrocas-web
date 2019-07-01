@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="custom/css/custom.css" />
+    <meta charset="UTF-8">
+    <title>Meu perfil</title>
+</head>
+
+<body>
+<header th:replace="fragmentos/header.html :: header"></header>
+    <div class="container">
+        <form action="salvarusuario" method="post" th:object="${veiculo}" enctype="multipart/form-data">
+            <label>Identificação</label>
+            <input name="id" th:value="${usuario.id}" readonly>
+            <label>Login</label>
+            <input name="login" th:value="${usuario.login}" readonly>
+            <label>Nome</label>
+            <input name="nome" th:value="${usuario.nome}" required>
+            <label>Sobrenome</label>
+            <input name="sobrenome" th:value="${usuario.sobrenome}" required>
+            <label>E-mail</label>
+            <input th:value="${usuario.email}" name="email" type="email" required>
+            <label>Senha</label>
+            <input th:value="${usuario.senha}" name="senha" type="password" required>
+            <label>Telefone</label>
+            <input th:value="${usuario.telefone}" name="telefone" type="text" data-mask="(00) 00000-0000">
+            <input type="submit" value="Salvar" class="waves-effect waves-light btn">
+        </form>
+    </div>
+    <footer th:replace="fragmentos/footer.html :: footer"></footer>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+
+</html>

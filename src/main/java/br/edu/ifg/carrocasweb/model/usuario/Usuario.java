@@ -39,7 +39,7 @@ public class Usuario {
 	private Date dataCadastro;
 	
 	@Column
-	private String telefoneContato;
+	private String telefone;
 	
 	@OneToMany(mappedBy = "usuario")
 	private List<Anuncio> anuncios;
@@ -102,12 +102,12 @@ public class Usuario {
 		this.dataCadastro = dataCadastro;
 	}
 	
-	public String getTelefoneContato() {
-		return telefoneContato;
+	public String getTelefone() {
+		return telefone;
 	}
 	
-	public void setTelefoneContato(String telefoneContato) {
-		this.telefoneContato = telefoneContato;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 	
 	public List<Anuncio> getAnuncios() {

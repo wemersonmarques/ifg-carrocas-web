@@ -124,28 +124,36 @@ public class AnuncioController extends Thread {
 
 	@RequestMapping("/editarAnuncio")
 	public ModelAndView editarAnuncio(@RequestParam("id") Long id) {
-		ModelAndView mav = new ModelAndView("edicao/edicaoanuncio");
-		Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
-		Veiculo veiculo = anuncio.getVeiculo();
+		if (LoginService.isAutenticado(sessao)) {
+			ModelAndView mav = new ModelAndView("edicao/edicaoanuncio");
+			Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
+			Veiculo veiculo = anuncio.getVeiculo();
 
-		List<Marca> marcas = marcaDao.consultarTodos(Marca.class);
+			List<Marca> marcas = marcaDao.consultarTodos(Marca.class);
 
-		mav.addObject("anuncio", anuncio);
-		mav.addObject("veiculo", veiculo);
-		mav.addObject("marcas", marcas);
+			mav.addObject("anuncio", anuncio);
+			mav.addObject("veiculo", veiculo);
+			mav.addObject("marcas", marcas);
 
-		return mav;
+			return mav;
+		} else {
+			return new ModelAndView("redirect:logon");
+		}
 	}
-	
+
 	@RequestMapping("inativarAnuncio")
 	public ModelAndView inativarAnuncio(@RequestParam("id") Long id) {
-		Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
-		
-		if (anuncio != null) {
-			anuncioDao.inativar(anuncio);
+		if (LoginService.isAutenticado(sessao)) {
+			Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
+
+			if (anuncio != null) {
+				anuncioDao.inativar(anuncio);
+			}
+
+			return new ModelAndView("redirect:cadastroanuncio");
+		} else {
+			return new ModelAndView("redirect:logon");
 		}
-		
-		return new ModelAndView("redirect:cadastroanuncio");
 	}
 
 }
