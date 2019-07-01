@@ -17,6 +17,11 @@ public class FileWritter {
 
 	public void upload(MultipartFile[] files, long id) {
 		StringBuilder fileNames = new StringBuilder();
+		
+		if (new File(uploadDirectory, id + "/foto.jpg").exists()) {
+			apagarFotoExistente(id);
+		}
+		
 		for (MultipartFile file : files) {
 			// Cria pasta com o id do anuncio
 		
@@ -31,7 +36,7 @@ public class FileWritter {
 		}
 	}
 	
-	public void apagarExistente(long id) {
+	public void apagarFotoExistente(long id) {
 		Path fileNameAndPath = Paths.get(uploadDirectory, id + "/foto.jpg");
 		
 		try {

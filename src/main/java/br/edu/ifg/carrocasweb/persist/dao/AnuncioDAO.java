@@ -29,7 +29,7 @@ public class AnuncioDAO extends AbstractGenericDAO {
 		List<Anuncio> anuncios;
 
 		try {
-			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a WHERE lower(a.titulo) LIKE lower(:titulo)")
+			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a WHERE a.ativo = true AND lower(a.titulo) LIKE lower(:titulo)")
 					.setParameter("titulo", "%" + titulo + "%").getResultList();
 		} catch (NoResultException e) {
 			anuncios = null;
@@ -41,7 +41,7 @@ public class AnuncioDAO extends AbstractGenericDAO {
 		List<Anuncio> anuncios;
 
 		try {
-			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a INNER JOIN Usuario u ON a.usuario = u WHERE u.id = :id").setParameter("id", usuario.getId()).getResultList();
+			anuncios = entityManager.createQuery("SELECT a FROM Anuncio a INNER JOIN Usuario u ON a.usuario = u WHERE a.ativo = true AND u.id = :id").setParameter("id", usuario.getId()).getResultList();
 		} catch (NoResultException e) {
 			anuncios = null;
 		}
@@ -53,7 +53,7 @@ public class AnuncioDAO extends AbstractGenericDAO {
 
 		try {
 			anuncios = entityManager.createQuery(
-					"SELECT a FROM Anuncio a INNER JOIN Veiculo v ON a.veiculo = v INNER JOIN Marca m ON v.marca = m WHERE m.id = :id")
+					"SELECT a FROM Anuncio a INNER JOIN Veiculo v ON a.veiculo = v INNER JOIN Marca m ON v.marca = m WHERE a.ativo = true AND m.id = :id")
 					.setParameter("id", idMarca).getResultList();
 		} catch (NoResultException e) {
 			anuncios = null;
@@ -62,6 +62,8 @@ public class AnuncioDAO extends AbstractGenericDAO {
 		return anuncios;
 	}
 	
-	
+	public void inativar(Anuncio anuncio) {
+		entityManager.createQuery("UPDATE Anuncio a SET a.ativo = false WHERE a.id = :id").setParameter("id", anuncio.getId()).executeUpdate();
+	}
 
 }

@@ -24,6 +24,7 @@ import br.edu.ifg.carrocasweb.persist.dao.AnuncioDAO;
 import br.edu.ifg.carrocasweb.persist.dao.MarcaDAO;
 import br.edu.ifg.carrocasweb.persist.dao.UsuarioDAO;
 import br.edu.ifg.carrocasweb.persist.dao.VeiculoDAO;
+import br.edu.ifg.carrocasweb.service.LoginService;
 
 @Controller
 public class AnuncioController extends Thread {
@@ -36,80 +37,79 @@ public class AnuncioController extends Thread {
 
 	@Autowired
 	private VeiculoDAO veiculoDao;
-	
+
 	@Autowired
 	private UsuarioDAO usuarioDao;
-	
+
 	@Autowired
-	private HttpServletRequest request;
-	
-	@Autowired
-	private HttpServletResponse response;
+	private HttpSession sessao;
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastroanuncio")
 	public ModelAndView cadastroAnuncio() {
-		ModelAndView mav = new ModelAndView("cadastro/cadastroanuncio");
-		List<Marca> marcas = marcaDao.consultarTodos(Marca.class);
-		Veiculo veiculo = new Veiculo();
-		Anuncio anuncio = new Anuncio();
+		if (LoginService.isAutenticado(sessao)) {
+			ModelAndView mav = new ModelAndView("cadastro/cadastroanuncio");
+			List<Marca> marcas = marcaDao.consultarTodos(Marca.class);
+			Veiculo veiculo = new Veiculo();
+			Anuncio anuncio = new Anuncio();
 
-		HttpSession sessao = request.getSession();
-		String usuario = (String) sessao.getAttribute("usuarioAutenticado");
-		List<Anuncio> anuncios = null;
-		
-		if (!usuario.isEmpty() && usuario != null) {
+			String usuario = (String) sessao.getAttribute("usuarioAutenticado");
 			Usuario user = usuarioDao.consultarPorLogin(usuario);
-			anuncios = anuncioDao.consultarPorUsuario(user);
-		} else {
-			anuncios = anuncioDao.consultarTodos(Anuncio.class);
-		}
+			List<Anuncio> anuncios = anuncioDao.consultarPorUsuario(user);
 
-		mav.addObject("marcas", marcas);
-		mav.addObject("marca", new Marca());
-		mav.addObject("veiculo", veiculo);
-		mav.addObject("anuncio", anuncio);
-		mav.addObject("anuncios", anuncios);
-		
-		return mav;
+			mav.addObject("marcas", marcas);
+			mav.addObject("marca", new Marca());
+			mav.addObject("veiculo", veiculo);
+			mav.addObject("anuncio", anuncio);
+			mav.addObject("anuncios", anuncios);
+
+			return mav;
+		} else {
+			return new ModelAndView("redirect:logon");
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/salvaranuncio")
 	public String salvarAnuncio(Anuncio anuncio, @RequestParam("files") MultipartFile[] files) {
-		Veiculo veiculo = new Veiculo();
-		ModelAndView mav = new ModelAndView("redirect:cadastro/cadastroanuncio");
-		mav.addObject("veiculo", veiculo);
-		FileWritter upload = new FileWritter();
-		
-		// Acessando usuário que está autenticado
-		HttpSession sessao = request.getSession();
-		String usuario = (String) sessao.getAttribute("usuarioAutenticado");
-		
-		// Inserindo informações no veiculo
-		veiculo.setMarca((Marca) marcaDao.consultarPorId(Marca.class, anuncio.getIdMarcaVeiculo()));
-		veiculo.setModelo(anuncio.getModeloVeiculo());
-		veiculo.setMotorizacao(anuncio.getMotorizacaoVeiculo());
-		veiculo.setQuilometragem(anuncio.getQuilometragemVeiculo());
-		
-		// Inserindo informações necessárias no anuncio
-		anuncio.setVeiculo(veiculo);
-		anuncio.setUsuario(usuarioDao.consultarPorLogin(usuario));
-		
-		// Se anúncio já existir só vai atualizar
-		if (anuncio.getId() != null && anuncioDao.existe(String.valueOf(anuncio.getId()))) {
-			anuncio.setDataCadastro(new Date());
-			veiculoDao.salvar(veiculo);
-			anuncioDao.atualizar(anuncio);
-			// Apaga arquivo anterior se existir
-			upload.apagarExistente(anuncio.getId());
-		} else {
-			veiculoDao.salvar(veiculo);
-			anuncioDao.salvar(anuncio);
-		}
-		
-		// Persistindo foto
-		upload.upload(files, anuncio.getId());
+		if (LoginService.isAutenticado(sessao)) {
+			Veiculo veiculo = new Veiculo();
+			ModelAndView mav = new ModelAndView("redirect:cadastro/cadastroanuncio");
+			mav.addObject("veiculo", veiculo);
+			FileWritter upload = new FileWritter();
 
-		return "redirect:cadastroanuncio";
+			// Acessando usuário que está autenticado
+			String usuario = (String) sessao.getAttribute("usuarioAutenticado");
+
+			// Inserindo informações no veiculo
+			veiculo.setMarca((Marca) marcaDao.consultarPorId(Marca.class, anuncio.getIdMarcaVeiculo()));
+			veiculo.setModelo(anuncio.getModeloVeiculo());
+			veiculo.setMotorizacao(anuncio.getMotorizacaoVeiculo());
+			veiculo.setQuilometragem(anuncio.getQuilometragemVeiculo());
+
+			// Inserindo informações necessárias no anuncio
+			anuncio.setVeiculo(veiculo);
+			anuncio.setUsuario(usuarioDao.consultarPorLogin(usuario));
+
+			// Se anúncio já existir só vai atualizar
+			if (anuncio.getId() != null && anuncioDao.existe(String.valueOf(anuncio.getId()))) {
+				anuncio.setDataCadastro(new Date());
+				veiculoDao.salvar(veiculo);
+				anuncioDao.atualizar(anuncio);
+				// Apaga arquivo anterior se existir
+				if (files != null) {
+					upload.apagarFotoExistente(anuncio.getId());
+				}
+			} else {
+				veiculoDao.salvar(veiculo);
+				anuncioDao.salvar(anuncio);
+			}
+
+			// Persistindo foto
+			upload.upload(files, anuncio.getId());
+
+			return "redirect:cadastroanuncio";
+		} else {
+			return "redirect:logon";
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listaranuncios")
@@ -123,11 +123,11 @@ public class AnuncioController extends Thread {
 	}
 
 	@RequestMapping("/editarAnuncio")
-	public ModelAndView editarAnuncio(@RequestParam("id") long id) {
+	public ModelAndView editarAnuncio(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("edicao/edicaoanuncio");
 		Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
 		Veiculo veiculo = anuncio.getVeiculo();
-		
+
 		List<Marca> marcas = marcaDao.consultarTodos(Marca.class);
 
 		mav.addObject("anuncio", anuncio);
@@ -135,6 +135,17 @@ public class AnuncioController extends Thread {
 		mav.addObject("marcas", marcas);
 
 		return mav;
+	}
+	
+	@RequestMapping("inativarAnuncio")
+	public ModelAndView inativarAnuncio(@RequestParam("id") Long id) {
+		Anuncio anuncio = (Anuncio) anuncioDao.consultarPorId(Anuncio.class, id);
+		
+		if (anuncio != null) {
+			anuncioDao.inativar(anuncio);
+		}
+		
+		return new ModelAndView("redirect:cadastroanuncio");
 	}
 
 }

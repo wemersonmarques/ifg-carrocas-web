@@ -34,7 +34,7 @@ public class LoginController extends Thread {
 	public ModelAndView logar(@ModelAttribute("user") String usuario, @ModelAttribute("pass") String pass) {
 		Usuario user = usuarioDao.consultarPorLogin(usuario);
 		
-		if (user != null && user.getLogin().equals(usuario)&& user.getSenha().equals(pass)) {
+		if (user != null && user.getLogin().equals(usuario) && user.getSenha().equals(pass)) {
 			HttpSession sessao = request.getSession();
 			sessao.setAttribute("usuarioAutenticado", user.getLogin());
 			return new ModelAndView("redirect:");

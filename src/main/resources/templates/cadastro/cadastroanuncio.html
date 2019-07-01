@@ -8,7 +8,7 @@
     <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="custom/css/custom.css" />
     <meta charset="UTF-8">
-    <title>Cadastro Usuario</title>
+    <title>Cadastro Anúncio</title>
 </head>
 
 <body>
@@ -34,15 +34,18 @@
                 <input type="submit" value="Salvar" class="waves-effect waves-light btn">
             </form>
             
-            <table class="col-md-6">
+            <div class="col-md-6">
+            <table id="meusAnuncios">
+            	<h2>Meus anúncios</h2>
                 <tr th:each="anuncio  : ${anuncios}">
                     <td th:text="${anuncio.id}"></td>
                     <td th:text="${anuncio.titulo}"></td>
                     <td th:text="${anuncio.dataCadastro}"></td>
                     <td th:text="${anuncio.veiculo.modelo}"></td>
-                    <td><a th:href="${'/editarAnuncio?id=' + anuncio.id}">Editar</a></td>
+                    <td><a th:href="${'/editarAnuncio?id=' + anuncio.id}">Editar</a> | <td><a th:href="${'/inativarAnuncio?id=' + anuncio.id}">Remover</a></td></td>
                 </tr>
             </table>
+            </div>
         </div>
     </div>
     <footer th:replace="fragmentos/footer.html :: footer"></footer>
