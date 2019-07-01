@@ -15,7 +15,7 @@ import br.edu.ifg.carrocasweb.functionality.FileWritter;
 public class CarrocaswebApplication {
 
 	public static void main(String[] args) {
-		new File(FileWritter.uploadDirectory).mkdir();
+		new File(FileWritter.uploadDirectory).mkdirs();
 		SpringApplication.run(CarrocaswebApplication.class, args);
 	}
 

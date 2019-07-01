@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="custom/css/custom.css" />
+    <meta charset="UTF-8">
+    <title>Cadastro Usuario</title>
+</head>
+
+<body>
+<header th:replace="fragmentos/header.html :: header"></header>
+    <div class="container">
+        <form action="salvaranuncio" method="post" th:object="${veiculo}" enctype="multipart/form-data">
+            <label>Identificação</label>
+            <input name="id" th:value="${anuncio.id}" readonly>
+            <label>Titulo</label>
+            <input name="titulo" th:value="${anuncio.titulo}" required>
+            <label>Marca do Veículo</label>
+            <select name="idMarcaVeiculo" class="form-control" multiple required size="3">
+                <option th:each="marca : ${marcas}" th:value="${marca.id}" th:text="${marca.nome}"  th:selected="${marca.id == veiculo.marca.id}">
+                </option>
+            </select>
+            <label>Modelo</label>
+            <input th:value="${veiculo.modelo}" name="modeloVeiculo" required>
+            <label>Quilometragem</label>
+            <input th:value="${veiculo.quilometragem}" name="quilometragemVeiculo" type="number" required>
+            <label>Motorizacao</label>
+            <input th:value="${veiculo.motorizacao}" name="motorizacaoVeiculo" required>
+            <label>Telefone</label>
+            <input th:value="${anuncio.telefone}" name="telefone" type="text" data-mask="(00) 00000-0000">
+            <input type="file" name="files" required>
+            <input type="submit" value="Salvar" class="waves-effect waves-light btn">
+        </form>
+    </div>
+    <footer th:replace="fragmentos/footer.html :: footer"></footer>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+
+</html>

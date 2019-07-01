@@ -11,20 +11,9 @@
 <title>Cadastro Usuario</title>
 </head>
 <body>
-	<header>
-		<div class="row">
-			<h3 id="logo" class="col-md-4">Carroças Web</h3>
-			<div id="redirecionamentoCadastros" class="col-md-8">
-				<a href="/cadastrousuario">Cadastro Usuario</a>
-				<a href="/cadastroveiculo">Cadastro Veículo</a>
-				<a href="/cadastromarca">Cadastro Marca</a>
-				<a href="/cadastroanuncio">Cadastro Anúncio</a>
-				<a href="/">Home</a>
-			</div>
-		</div>
-	</header>
+<header th:replace="fragmentos/header.html :: header"></header>
 	<div class="container">
-	<form action="salvarusuario" method="post">
+	<form action="salvarusuario" method="post" class="col-md-4" id="formSalvarUsuario">
 		<label>Login</label>
 		<input name="login" required>
 		<label>Senha</label>
@@ -33,48 +22,14 @@
 		<input name="nome" required>
 		<label>Sobrenome</label>
 		<input name="sobrenome" required> 
-		<label>email</label> 
-		<input name="E-mail" required> 
+		<label>E-mail</label> 
+		<input name="email" required> 
 		<label>Telefone de Contato</label> 
 		<input name="telefone" required>
 		<input type="submit" value="Salvar" class="waves-effect waves-light btn">
 	</form>
-
-	<br />
-	<br />
-
-	<a href="/listarusuarios">Listar usuarios</a>
-	<table>
-		<tr th:each="usuario  : ${usuarios}">
-			<td th:text="${usuario.id}"></td>
-			<td th:text="${usuario.login}"></td>
-			<td th:text="${usuario.nome}"></td>
-			<td th:text="${usuario.sobrenome}"></td>
-			<td th:text="${usuario.email}"></td>
-			<td th:text="${usuario.telefoneContato}"></td>
-		</tr>
-
-	</table>
-	
-	<br />
-	<br />
-	
-	<form action="pesquisarusuario" method="post">
-		<label>Pesquisa por nome</label>
-		<input name="nomepesquisa">
-		<input type="submit" class="waves-effect waves-light btn">
-	</form>
-	<table>
-		<tr th:each="usuario  : ${usuariosnome}">
-			<td th:text="${usuario.id}"></td>
-			<td th:text="${usuario.login}"></td>
-			<td th:text="${usuario.nome}"></td>
-			<td th:text="${usuario.sobrenome}"></td>
-			<td th:text="${usuario.email}"></td>
-			<td th:text="${usuario.telefoneContato}"></td>
-		</tr>
-	</table>
 	</div>
+	<footer th:replace="fragmentos/footer.html :: footer"></footer>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>

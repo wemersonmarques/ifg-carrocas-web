@@ -21,14 +21,18 @@ public class MarcaController extends Thread {
 	private MarcaDAO marcaDao;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastromarca")
-	public String inicio(){
-		return "cadastro/cadastromarca";
+	public ModelAndView inicio(){
+		ModelAndView mav = new ModelAndView("cadastro/cadastromarca");
+		mav.addObject("marcas", marcaDao.consultarTodos(Marca.class));
+		
+		return mav;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarmarca")
 	public String salvar(Marca marca) {
 		marcaDao.salvar(marca);
-		return "cadastro/cadastromarca";
+		
+		return "redirect:cadastromarca";
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/listarmarcas")
@@ -38,15 +42,6 @@ public class MarcaController extends Thread {
 		mav.addObject("marcas", marcas);
 
 		return mav;		
-	}
-	
-	@PostMapping("**/pesquisarmarca")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
-		ModelAndView mav = new ModelAndView("cadastro/cadastromarca");
-		List<Marca> marcas = marcaDao.consultarPorNome(nomepesquisa); 
-		mav.addObject("marcasnome", marcas);
-		mav.addObject("marca", new Marca());
-		return mav;
 	}
 
 }

@@ -1,82 +1,52 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
-<link type="text/css" rel="stylesheet" href="custom/css/custom.css"/>
-<meta charset="UTF-8">
-<title>Cadastro Usuario</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="custom/css/custom.css" />
+    <meta charset="UTF-8">
+    <title>Cadastro Usuario</title>
 </head>
+
 <body>
-	<header>
-		<div class="row">
-			<h3 id="logo" class="col-md-4">Carroças Web</h3>
-			<div id="redirecionamentoCadastros" class="col-md-8">
-				<a href="/cadastrousuario">Cadastro Usuario</a>
-				<a href="/cadastroveiculo">Cadastro Veículo</a>
-				<a href="/cadastromarca">Cadastro Marca</a>
-				<a href="/cadastroanuncio">Cadastro Anúncio</a>
-				<a href="/">Home</a>
-			</div>
-		</div>
-	</header>
-	<div class="container">
-	<form action="salvaranuncio" method="post" th:object="${veiculo}" enctype="multipart/form-data">
-		<label>Titulo</label>
-		<input name="titulo" th:value="${anuncio.titulo}" required>
-		<label>Marca do Veículo</label>
-		<select name="idMarcaVeiculo" class="form-control" multiple required size="3">
-  			<option th:each="marca : ${marcas}"                                        
-      			th:value="${marca.id}"
-      			th:text="${marca.nome}">
-  			</option>
-		</select>
-		<label>Modelo</label>
-		<input name="modeloVeiculo" required> 
-		<label>Quilometragem</label>
-		<input name="quilometragemVeiculo" type="number" required> 
-		<label>Motorizacao</label> 
-		<input name="motorizacaoVeiculo" required>
-		<label>Telefone</label>
-		<input name="telefone" type="text" data-mask="(00) 00000-0000">
-		<input type="file" name="files" required>
-		<input type="submit" value="Salvar" class="waves-effect waves-light btn">
-	</form>
-
-	<br />
-	<br />
-
-	<a href="/listaranuncios">Listar anúncios</a>
-	<table>
-		<tr th:each="anuncio  : ${anuncios}">
-			<td th:text="${anuncio.id}"></td>
-			<td th:text="${anuncio.titulo}"></td>
-			<td th:text="${anuncio.dataCadastro}"></td>
-			<td th:text="${anuncio.veiculo.modelo}"></td>
-		</tr>
-
-	</table>
-	
-	<br />
-	<br />
-	
-	<form action="pesquisaranuncio" method="post">
-		<label>Pesquisa por título</label>
-		<input name="nomepesquisa">
-		<input type="submit" class="waves-effect waves-light btn">
-	</form>
-	<table>
-		<tr th:each="anuncio  : ${anunciosPesquisa}">
-			<td th:text="${anuncio.id}"></td>
-			<td th:text="${anuncio.titulo}"></td>
-			<td th:text="${anuncio.dataCadastro}"></td>
-			<td th:text="${anuncio.veiculo.modelo}"></td>
-		</tr>
-	</table>
-	</div>
-	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<header th:replace="fragmentos/header.html :: header"></header>
+    <div class="container">
+        <div class="row">
+            <form action="salvaranuncio" method="post" th:object="${veiculo}" enctype="multipart/form-data" class="col-md-6">
+                <label>Titulo</label>
+                <input name="titulo" th:value="${anuncio.titulo}" required>
+                <label>Marca do Veículo</label>
+                <select name="idMarcaVeiculo" class="form-control" multiple required size="3">
+                    <option th:each="marca : ${marcas}" th:value="${marca.id}" th:text="${marca.nome}"></option>
+                </select>
+                <label>Modelo</label>
+                <input name="modeloVeiculo" required>
+                <label>Quilometragem</label>
+                <input name="quilometragemVeiculo" type="number" required>
+                <label>Motorizacao</label>
+                <input name="motorizacaoVeiculo" required>
+                <label>Telefone</label>
+                <input name="telefone" type="text" data-mask="(00) 00000-0000">
+                <input type="file" name="files" required>
+                <input type="submit" value="Salvar" class="waves-effect waves-light btn">
+            </form>
+            
+            <table class="col-md-6">
+                <tr th:each="anuncio  : ${anuncios}">
+                    <td th:text="${anuncio.id}"></td>
+                    <td th:text="${anuncio.titulo}"></td>
+                    <td th:text="${anuncio.dataCadastro}"></td>
+                    <td th:text="${anuncio.veiculo.modelo}"></td>
+                    <td><a th:href="${'/editarAnuncio?id=' + anuncio.id}">Editar</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <footer th:replace="fragmentos/footer.html :: footer"></footer>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
+
 </html>

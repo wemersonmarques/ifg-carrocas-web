@@ -27,6 +27,7 @@ public abstract class AbstractGenericDAO<T>{
 	public List<T> consultarTodos(Class clazz) {
 		return (List<T>) entityManager.createQuery("SELECT u FROM " + clazz.getSimpleName() + " u").getResultList();
 	}
+	
 	public void deletar(T t) {
 		entityManager.remove(t);
 	}

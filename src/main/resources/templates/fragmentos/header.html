@@ -1,0 +1,17 @@
+<meta charset="UTF-8">
+<header>
+	<div class="row">
+		<h3 id="logo" class="col-md-4">Carroças Web</h3>
+		<div id="redirecionamentoCadastros" class="col-md-8">
+			<a href="/deslogar"
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Sair</a>
+			<a href="/logon"
+				th:if="${#session?.getAttribute('usuarioAutenticado') == null}">Logar</a>
+			<a href="/cadastromarca"
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro
+				Marca</a> <a href="/cadastroanuncio"
+				th:if="${#session?.getAttribute('usuarioAutenticado') != null}">Cadastro
+				Anúncio</a> <a href="/">Home</a>
+		</div>
+	</div>
+</header>

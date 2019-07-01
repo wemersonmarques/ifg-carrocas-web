@@ -12,18 +12,7 @@
 <title>Cadastro Usuario</title>
 </head>
 <body>
-<header>
-		<div class="row">
-			<h3 id="logo" class="col-md-4">Carroças Web</h3>
-			<div id="redirecionamentoCadastros" class="col-md-8">
-				<a href="/cadastrousuario">Cadastro Usuario</a>
-				<a href="/cadastroveiculo">Cadastro Veículo</a>
-				<a href="/cadastromarca">Cadastro Marca</a>
-				<a href="/cadastroanuncio">Cadastro Anúncio</a>
-				<a href="/">Home</a>
-			</div>
-		</div>
-	</header>
+<header th:replace="fragmentos/header.html :: header"></header>
 	<div class="container">
 	<form action="salvarveiculo" method="post" th:object="${veiculo}">
 		<label>Marca</label>
@@ -59,6 +48,7 @@
 		</tr>
 	</table>
 	</div>
+	<footer th:replace="fragmentos/footer.html :: footer"></footer>
 		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>

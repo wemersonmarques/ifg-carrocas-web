@@ -10,18 +10,7 @@
 <title>Carrocas Web - IFG</title>
 </head>
 <body>
-	<header>
-		<div class="row">
-			<h3 id="logo" class="col-md-4">Carroças Web</h3>
-			<div id="redirecionamentoCadastros" class="col-md-8">
-				<a href="/cadastrousuario">Cadastro Usuario</a>
-				<a href="/cadastroveiculo">Cadastro Veículo</a>
-				<a href="/cadastromarca">Cadastro Marca</a>
-				<a href="/cadastroanuncio">Cadastro Anúncio</a>
-				<a href="/">Home</a>
-			</div>
-		</div>
-	</header>
+	<header th:replace="fragmentos/header.html :: header"></header>
 	<main>
 		<div class="container">
 			<div id="anuncios" class="row">
@@ -52,14 +41,14 @@
 							<td th:utext="'<b>KM:</b> ' + ${anuncio.veiculo.quilometragem}" class="kmVeiculoAnuncio"></td>
 							<td th:utext="'<b>Telefone:</b> ' + ${anuncio.telefone}" class="telefoneAnuncio"></td>
 							<td th:utext="'<b>Data:</b> ' + ${anuncio.dataCadastro}" class="dataAnuncio"></td>
+							<td th:utext="'<b>Usuario:</b> ' + ${anuncio.usuario.nome}" class="dataAnuncio"></td>
+							
 						</tr>
 					</table>
 				</div>
 			</div>
 		</div>
-		<footer class="col-md-12">
-			<p>Trabalho desenvolvido para disciplina Programação Orientada a Objetos II - Prof. Otávio Calaça Xavier</p>
-		</footer>
+		<footer th:replace="fragmentos/footer.html :: footer"></footer>
 	</main>
 </body>
 </html>

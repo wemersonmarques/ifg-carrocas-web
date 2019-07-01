@@ -2,6 +2,10 @@ package br.edu.ifg.carrocasweb.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifg.carrocasweb.model.anuncio.Anuncio;
 import br.edu.ifg.carrocasweb.model.veiculo.Marca;
-import br.edu.ifg.carrocasweb.model.veiculo.Veiculo;
 import br.edu.ifg.carrocasweb.persist.dao.AnuncioDAO;
 import br.edu.ifg.carrocasweb.persist.dao.MarcaDAO;
 import br.edu.ifg.carrocasweb.persist.dao.VeiculoDAO;
@@ -28,10 +31,18 @@ public class InicioController extends Thread {
 	@Autowired
 	private VeiculoDAO veiculoDao;
 	
+	@Autowired
+	private HttpServletRequest request;
+	
+	@Autowired
+	private HttpServletResponse response;
+	
 	@RequestMapping(method = RequestMethod.GET, value = {"/", "/index.html"})
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("index.html");
-		Iterable<Anuncio> anuncios = anuncioDao.consultarTodos(Anuncio.class);
+
+		List<Anuncio> anuncios = anuncioDao.consultarTodos(Anuncio.class);
+		
 		mav.addObject("anuncios", anuncios);
 		mav.addObject("anuncio", new Anuncio());
 		mav.addObject("marcas", marcaDao.consultarTodos(Marca.class));
@@ -55,4 +66,6 @@ public class InicioController extends Thread {
 		mav.addObject("anuncios", anuncios);
 		return mav;
 	}
+	
+	
 }

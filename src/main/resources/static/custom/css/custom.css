@@ -45,10 +45,6 @@ header {
 	display: table-cell!important;
 }
 
-.btn {
-	float: right;
-}
-
 footer {
 	bottom: 0;
 	text-align: center;
@@ -59,4 +55,8 @@ footer {
 
 #pesquisarPorMarca {
 	clear: both;
+}
+
+#formSalvarUsuario {
+	margin:auto;
 }

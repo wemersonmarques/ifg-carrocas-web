@@ -30,5 +30,16 @@ public class FileWritter {
 			}
 		}
 	}
+	
+	public void apagarExistente(long id) {
+		Path fileNameAndPath = Paths.get(uploadDirectory, id + "/foto.jpg");
+		
+		try {
+			Files.deleteIfExists(fileNameAndPath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

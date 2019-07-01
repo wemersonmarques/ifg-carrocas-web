@@ -5,58 +5,34 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
-<link type="text/css" rel="stylesheet" href="custom/css/custom.css"/>
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="bootstrap/css/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="custom/css/custom.css" />
 <meta charset="UTF-8">
 <title>Cadastro Marca</title>
 </head>
 <body>
-	<header>	
-		<div class="row">
-			<h3 id="logo" class="col-md-4">Carroças Web</h3>
-			<div id="redirecionamentoCadastros" class="col-md-8">
-				<a href="/cadastrousuario">Cadastro Usuario</a>
-				<a href="/cadastroveiculo">Cadastro Veículo</a>
-				<a href="/cadastromarca">Cadastro Marca</a>
-				<a href="/cadastroanuncio">Cadastro Anúncio</a>
-				<a href="/">Home</a>
-			</div>
-		</div>
-	</header>
+<header th:replace="fragmentos/header.html :: header"></header>	</header>
 	<div class="container">
-	<form action="salvarmarca" method="post">
-		<label>Nome da marca</label>
-		<input name="nome" required> 
-		<input type="submit" value="Salvar" class="waves-effect waves-light btn">
-	</form>
+		<div class="row">
+		<form action="salvarmarca" method="post" class="col-md-6">
+			<label>Nome da marca</label> <input name="nome" required> <input
+				type="submit" value="Salvar" class="waves-effect waves-light btn">
+		</form>
 
-	<br />
-	<br />
+		<br />
+		<br />
 
-	<a href="/listarmarcas">Listar marcas</a>
-	<table>
-		<tr th:each="marca  : ${marcas}">
-			<td th:text="${marca.id}"></td>
-			<td th:text="${marca.nome}"></td>
-		</tr>
-
-	</table>
-
-	<br />
-	<br />
-
-	<form action="pesquisarmarca" method="post">
-		<label>Pesquisa por marca</label> <input name="nomepesquisa">
-		<input type="submit" class="waves-effect waves-light btn">
-	</form>
-	<table>
-		<tr th:each="marca  : ${marcasnome}">
-			<td th:text="${marca.id}"></td>
-			<td th:text="${marca.nome}"></td>
-		</tr>
-	</table>
-	</div>
-	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<table class="col-md-6">
+			<tr th:each="marca  : ${marcas}">
+				<td th:text="${marca.id}"></td>
+				<td th:text="${marca.nome}"></td>
+			</tr>
+		</table>
+</div>
+<footer th:replace="fragmentos/footer.html :: footer"></footer>
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>
