@@ -58,7 +58,14 @@ public class Anuncio {
 	
 	@Transient
 	private long quilometragemVeiculo;  
-	
+
+	public Anuncio() {}
+
+	public Anuncio(String titulo, boolean ativo, String telefone) {
+		this.titulo = titulo;
+		this.ativo = ativo;
+		this.telefone = telefone;
+	}
 	
 	public Long getId() {
 		return id;

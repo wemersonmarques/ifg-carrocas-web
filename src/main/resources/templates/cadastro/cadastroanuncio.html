@@ -15,9 +15,9 @@
 <header th:replace="fragmentos/header.html :: header"></header>
     <div class="container">
         <div class="row">
-            <form action="salvaranuncio" method="post" th:object="${veiculo}" enctype="multipart/form-data" class="col-md-6">
+            <form action="salvaranuncio" method="post" enctype="multipart/form-data" class="col-md-6">
                 <label>Titulo</label>
-                <input name="titulo" th:value="${anuncio.titulo}" required>
+                <input name="tituloAnuncio" th:value="${anuncio.titulo}" required>
                 <label>Marca do Veículo</label>
                 <select name="idMarcaVeiculo" class="form-control" multiple required size="3">
                     <option th:each="marca : ${marcas}" th:value="${marca.id}" th:text="${marca.nome}"></option>
@@ -29,7 +29,7 @@
                 <label>Motorizacao</label>
                 <input name="motorizacaoVeiculo" required>
                 <label>Telefone</label>
-                <input name="telefone" type="text" data-mask="(00) 00000-0000">
+                <input name="telefoneAnuncio" type="text" data-mask="(00) 00000-0000">
                 <input type="file" name="files" required>
                 <input type="submit" value="Salvar" class="waves-effect waves-light btn">
             </form>

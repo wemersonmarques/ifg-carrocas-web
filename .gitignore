@@ -1,6 +1,7 @@
 /target/
-.settings
+.settings/
 .classpath
 .project
 /logs/
 /src/main/resources/static/uploads
+.idea

@@ -31,16 +31,17 @@ public class UsuarioController extends Thread {
 		return "cadastro/cadastrousuario";
 	}
 
+	public UsuarioController() {
+		this.start();
+	}
+
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
 	public String salvar(Usuario usuario) {
-		if (LoginService.isAutenticado(sessao)) {
-			if (!usuarioDao.existe(usuario.getLogin())) {
-				usuarioDao.salvar(usuario);
-				return "cadastro/cadastrousuario";
-			} else {
-				usuarioDao.atualizar(usuario);
-			}
-			return "redirect:";
+		if (!usuarioDao.existe(usuario.getLogin())) {
+			usuarioDao.salvar(usuario);
+			return "cadastro/cadastrousuario";
+		} else {
+			usuarioDao.atualizar(usuario);
 		}
 		return "redirect:";
 

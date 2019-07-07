@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import br.edu.ifg.carrocasweb.dto.AnuncioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,25 +70,18 @@ public class AnuncioController extends Thread {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/salvaranuncio")
-	public String salvarAnuncio(Anuncio anuncio, @RequestParam("files") MultipartFile[] files) {
+	public String salvarAnuncio(AnuncioDTO anuncioDto, @RequestParam("files") MultipartFile[] files) {
 		if (LoginService.isAutenticado(sessao)) {
-			Veiculo veiculo = new Veiculo();
-			ModelAndView mav = new ModelAndView("redirect:cadastro/cadastroanuncio");
-			mav.addObject("veiculo", veiculo);
-			FileWritter upload = new FileWritter();
+			Veiculo veiculo = anuncioDto.getVeiculo();
+			veiculo.setMarca((Marca) marcaDao.consultarPorId(Marca.class, anuncioDto.getIdMarcaVeiculo()));
 
-			// Acessando usuário que está autenticado
-			String usuario = (String) sessao.getAttribute("usuarioAutenticado");
-
-			// Inserindo informações no veiculo
-			veiculo.setMarca((Marca) marcaDao.consultarPorId(Marca.class, anuncio.getIdMarcaVeiculo()));
-			veiculo.setModelo(anuncio.getModeloVeiculo());
-			veiculo.setMotorizacao(anuncio.getMotorizacaoVeiculo());
-			veiculo.setQuilometragem(anuncio.getQuilometragemVeiculo());
-
-			// Inserindo informações necessárias no anuncio
+			Anuncio anuncio = anuncioDto.getAnuncio();
 			anuncio.setVeiculo(veiculo);
-			anuncio.setUsuario(usuarioDao.consultarPorLogin(usuario));
+			anuncio.setUsuario(usuarioDao.consultarPorLogin(
+					String.valueOf(
+							sessao.getAttribute("usuarioAutenticado"))));
+
+			FileWritter upload = new FileWritter();
 
 			// Se anúncio já existir só vai atualizar
 			if (anuncio.getId() != null && anuncioDao.existe(String.valueOf(anuncio.getId()))) {
