@@ -31,15 +31,7 @@ public class Veiculo {
 	
 	@Transient
 	private String marcaIddd;
-
-	public Veiculo(){}
-
-	public Veiculo(String modelo, long quilometragem, String motorizacao) {
-		this.modelo = modelo;
-		this.quilometragem = quilometragem;
-		this.motorizacao = motorizacao;
-	}
-
+	
 	public Marca getMarca() {
 		return marca;
 	}

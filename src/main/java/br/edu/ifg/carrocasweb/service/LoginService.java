@@ -7,7 +7,11 @@ public class LoginService {
 	public static boolean isAutenticado(HttpSession sessao) {
 		String usuario = (String) sessao.getAttribute("usuarioAutenticado");
 
-		return usuario != null && !usuario.isEmpty();
+		if (usuario != null && !usuario.isEmpty()) {
+			return true;
+		}
+		
+		return false;
 	}
 
 
