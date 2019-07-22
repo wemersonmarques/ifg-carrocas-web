@@ -18,7 +18,7 @@ import br.edu.ifg.carrocasweb.persist.dao.UsuarioDAO;
 import br.edu.ifg.carrocasweb.service.LoginService;
 
 @Controller
-public class UsuarioController extends Thread {
+public class UsuarioController {
 
 	@Autowired
 	private UsuarioDAO usuarioDao;
@@ -33,23 +33,19 @@ public class UsuarioController extends Thread {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarusuario")
 	public String salvar(Usuario usuario) {
-		if (LoginService.isAutenticado(sessao)) {
-			if (!usuarioDao.existe(usuario.getLogin())) {
+		if (!usuarioDao.existe(usuario.getLogin())) {
 				usuarioDao.salvar(usuario);
 				return "cadastro/cadastrousuario";
 			} else {
 				usuarioDao.atualizar(usuario);
 			}
-			return "redirect:";
-		}
 		return "redirect:";
-
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/listarusuarios")
 	public ModelAndView usuarios() {
 		ModelAndView mav = new ModelAndView("cadastro/cadastrousuario");
-		Iterable<Usuario> usuarios = usuarioDao.consultarTodos(Usuario.class);
+		List<Usuario> usuarios = usuarioDao.consultarTodos(Usuario.class);
 		mav.addObject("usuarios", usuarios);
 
 		return mav;
@@ -71,7 +67,6 @@ public class UsuarioController extends Thread {
 
 		if (LoginService.isAutenticado(sessao)) {
 			ModelAndView mav = new ModelAndView("edicao/edicaousuario");
-
 			mav.addObject("usuario", usuario);
 
 			return mav;

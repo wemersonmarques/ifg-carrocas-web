@@ -12,7 +12,7 @@ import br.edu.ifg.carrocasweb.model.usuario.Usuario;
 
 @Repository
 @Transactional
-public class AnuncioDAO extends AbstractGenericDAO {
+public class AnuncioDAO<T> extends AbstractGenericDAO {
 
 	@Override
 	public boolean existe(String id) {
@@ -23,6 +23,11 @@ public class AnuncioDAO extends AbstractGenericDAO {
 		}
 		return false;
 
+	}
+
+	@Override
+	public List<T> consultarTodos(Class clazz) {
+		return (List<T>) entityManager.createQuery("SELECT u FROM " + clazz.getSimpleName() + " u WHERE u.ativo = true").getResultList();
 	}
 
 	public List<Anuncio> consultarPorTitulo(String titulo) {

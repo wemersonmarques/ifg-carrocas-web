@@ -27,9 +27,6 @@ public abstract class AbstractGenericDAO<T>{
 	}
 
 	public List<T> consultarTodos(Class clazz) {
-		if (clazz.equals(Anuncio.class)) {
-			return (List<T>) entityManager.createQuery("SELECT u FROM " + clazz.getSimpleName() + " u WHERE u.ativo = true").getResultList();	
-		}
 		return (List<T>) entityManager.createQuery("SELECT u FROM " + clazz.getSimpleName() + " u").getResultList();
 	}
 	

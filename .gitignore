@@ -1,6 +1,10 @@
-/target/
+.idea
 .settings
+/logs/
+/target/
 .classpath
 .project
-/logs/
+carrocasweb.iml
 /src/main/resources/static/uploads
+
+
